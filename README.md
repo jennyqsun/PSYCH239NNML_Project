@@ -43,19 +43,15 @@ Since single trial EEG signals could be very noise, and we plan on using each ch
 #### Domain Adaptation
 When combining all the trial across subjects, we assumed that there would be no individual differences among subjects. And that might severly hurt the performance of the models. Therefore, we used a correlation alighnment algorithm to normalize the features of each such subject based on one specific subject we picked, such that all we transform all subjects' features to one domain[5]. This was implemented by using by Python Package "transfertools." Figure 5 (right) demonstrates how the unsupervised transfer learning technique was applied to use the first and second order statistics of the source and target data for domain adpatation.
 
-![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/input_chart.png)<br />
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/Algorithms.png)<br />
 **Figure 5.** *Left: SVD procedure in 2D space. In our data it would be 121 channel dimensions. Right: Domain Adpatation.*<br />
 
 
 ### The two neural networks 
 #### Fully Connected Neural Network
+The first neural netowrk was a simple two-layer fully connected network (see Figure 6). Dropout rate was set to be .5 to prevent from overfitting. The loss function was calculated by cross entropy, and the optimizor was Adam using a learning 1e-3.
 
- 
- 
-
-
-
-![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/input_chart.png)<br />
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/fcn.png)<br />
 **Figure 6.** *Two-layer fully connect neural network for 121 30Hz channels and 121 40 Hz channels*<br />
 Figure source: https://towardsdatascience.com/coding-neural-network-forward-propagation-and-backpropagtion-ccf8cf369f76
 
