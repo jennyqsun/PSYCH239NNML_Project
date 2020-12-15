@@ -14,17 +14,23 @@ As humans, we constantly interact with the worl by quickly allocating attention,
 **Figure 2.** *Enhanced SSVEP spectrum summing from all trials using. Top two channels represent the photocells that record the stimulus at each frequency. Bottom figure shows the corresponding power at 30Hz and 40Hz obtained from Fast Fourier Transform (FFT) of the brain signals. As 40Hz has more power than 30Hz, we would interpret it as the subject deployed more attention to the distractor flicker, relative to the target flicker.* 
 
 
-
-
 ## Methods
 ### Task 
-The current Task is a S-R Mapping Task. The subject was asked to discriminate 2.45 cpd Gabor from 2.55cpd Gabor. There were three difficulty levels, with the easiest being responding to either stimulus, the medium one being responding with one of the two buttons based on the spatial frequency, and the hardest one being responding to spatial frequency contingent on a certain orientation. However, considering the current goal of the project and the size of the dataset, we will treat all trials equally. The task has a cue interval followed by a response interval (see Figure 3). with noise flickering at two different frequencies, The task displayed two SSVEPs signals flickering at 30Hz and 40Hz first 
+The current Task is a S-R Mapping Task. The subject was asked to discriminate 2.45 cpd Gabor from 2.55cpd Gabor. There were three difficulty levels, with the easiest being responding to either stimulus, the medium one being responding with one of the two buttons based on the spatial frequency, and the hardest one being responding to spatial frequency contingent on a certain orientation. However, considering the current goal of the project and the size of the dataset, we will treat all trials equally. The task had a cue interval followed by a response interval (see Figure 3). During the cue interval, two SSVEP noise signals flickered on both visual fields at two different frequencies, 30Hz and 40Hz for 0.5s - 1s as a probablistic cue. During the response interval, the target stimulus occured on either side of the visual field flickering at 20Hz, with a 30Hz noise in the background (see Figure 4). When the subject responds to the stimulus, accuracy and reaction time were collected.
 
-### Data Preprocessing
+### Dataset Structure and Data Preprocessing
+
+### The two neural networks 
+#### Fully Connected Neural Network
+
+ 
 
 ## Results
-![header image](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/demo_task.png)
-**Figure 3.** *Timeline of the Task.*
+![header image](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/demo_task.png)<br />
+**Figure 3.** *Timeline of the Task.*<br />
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/demo_signalnoise.png)<br />
+**Figure 4.** *How the actualy noise and target stimulus looke like.*<br />
 
 
 
@@ -32,4 +38,5 @@ The current Task is a S-R Mapping Task. The subject was asked to discriminate 2.
 # References 
 1. Bridwell, David A., James F. Cavanagh, Anne G. E. Collins, Michael D. Nunez, Ramesh Srinivasan, Sebastian Stober, and Vince D. Calhoun. 2018. “Moving Beyond ERP Components: A Selective Review of Approaches to Integrate EEG and Behavior.” Frontiers in Human Neuroscience 12. https://doi.org/10.3389/fnhum.2018.00106.
 
-2. 
+2. Nunez, Michael D., Joachim Vandekerckhove, and Ramesh Srinivasan. 2017. “How Attention Influences Perceptual Decision Making: Single-Trial EEG Correlates of Drift-Diffusion Model Parameters.” Journal of Mathematical Psychology 76 (Pt B): 117–30. https://doi.org/10.1016/j.jmp.2016.03.003.
+
