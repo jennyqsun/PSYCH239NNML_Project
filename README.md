@@ -18,27 +18,49 @@ As humans, we constantly interact with the worl by quickly allocating attention,
 ### Task 
 The current Task is a S-R Mapping Task. The subject was asked to discriminate 2.45 cpd Gabor from 2.55cpd Gabor. There were three difficulty levels, with the easiest being responding to either stimulus, the medium one being responding with one of the two buttons based on the spatial frequency, and the hardest one being responding to spatial frequency contingent on a certain orientation. However, considering the current goal of the project and the size of the dataset, we will treat all trials equally. The task had a cue interval followed by a response interval (see Figure 3). During the cue interval, two SSVEP noise signals flickered on both visual fields at two different frequencies, 30Hz and 40Hz for 0.5s - 1s as a probablistic cue. During the response interval, the target stimulus occured on either side of the visual field flickering at 20Hz, with a 30Hz noise in the background (see Figure 4). Accuracy and reaction time were collected and will be used as the class for the classification task.
 
+![header image](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/demo_task.png)<br />
+**Figure 3.** *Timeline of the Task.*<br />
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/demo_signalnoise.png)<br />
+**Figure 4.** *How the actualy noise and target stimulus looke like.*<br />
+
+
 ### Dataset Structure and Data Preprocessing
-The dataset contained 46 subjects data in total. 12 subjects were randomly selected to be used as testing set, and 33 subjects will be used as training set as one subject was excluded due to low accuracy. Within each subject there are 360 trials in total. EEG data was collected using High Density EEG cap with 128 channels. All the EEG data was cleaned by performing Independent Component Analysis (ICA) and removed the obvious non-brain signals. A trial is identified as a goodtrial when the artifact from all 128 channels don't reach a certain threshold, and when the RT is over 300ms. Within each subject, RT was broken into tertiles and labeld as slow, medium and fast RT before the trials were stacked.The input shape of the training set then become 33 subjects x goodtrials = 11134 trials. The final Test sets has an input shape of 12 subjects x goodtrials = 4038 trials. 
+The dataset contained 46 subjects data in total. 12 subjects were randomly selected to be used as testing set, and 33 subjects will be used as training set as one subject was excluded due to low accuracy. Within each subject there are 360 trials in total. EEG data was collected using High Density EEG cap with 128 channels. All the EEG data was cleaned by performing Independent Component Analysis (ICA) and removed the obvious non-brain signals. A trial is identified as a goodtrial when the artifact from all 128 channels don't reach a certain threshold, and when the RT is over 300ms. Within each subject, RT was broken into tertiles and labeld as slow, medium and fast RT before the trials were stacked.The input shape of the training set then become 33 subjects x goodtrials x features = 11134 trials x features. The final Test sets has an input shape of 12 subjects x goodtrials x features = 4038 trials x features. 
+
+#### Feature Selection
+The features for each sample could be broke down to two categories: Power for each channel at certain frequencies, Time Series data with the N200 time window, and N200 parameters (latency and amplitude). The chart below shows the general framework of the input data. Table 1 below shows the feautures that were explored.
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/input_chart.png)<br />
+**Table 1.** *The inputs that were fed to the neural networks. When combining Power and N200 features for CNN, the 2x1 vector for N200 signals are treated as an extra channel.*<br />
 
 #### Oversampling
 It's worth mentioning that 0.79% of the train set trials are correct trials, and 73% of the test set trials are correct trials. In order to avoid the bias in the trainset, incorrect trials were oversampled to match up with the correct trials. This makes the final number of training sameples become 17564 trials, and the testing samples stay the same.
 
 #### Single Trial Signal Estimate
+Since single trial EEG signals could be very noise, and we plan on using each channel as a feature, we will use a algorithm based on Singular Value Decomposition[2]. Using SVD we will be able to identify an optimal weights for channels to get better SNR at frequencies of interest or N200 amplitude. In the frequency domain, we perform a FFT on the ERP for each trial, and pass the fourier coefficients at target frequency and its neighouring frequencies to SVD. The V* matrix then contains an optimal weights for each channel such that it would maximize the power at frequency of interest. We then multiply the S Matrix back as V* contain eigenvalues (unit vector). Fiure 5 (left) demontrates the SVD procedure[4].
 
+#### Domain Adaptation
+When combining all the trial across subjects, we assumed that there would be no individual differences among subjects. And that might severly hurt the performance of the models. Therefore, we used a correlation alighnment algorithm to normalize the features of each such subject based on one specific subject we picked, such that all we transform all subjects' features to one domain[5]. This was implemented by using by Python Package "transfertools." Figure 5 (right) demonstrates how the unsupervised transfer learning technique was applied to use the first and second order statistics of the source and target data for domain adpatation.
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/input_chart.png)<br />
+**Figure 5.** *Left: SVD procedure in 2D space. In our data it would be 121 channel dimensions. Right: Domain Adpatation.*<br />
 
 
 ### The two neural networks 
 #### Fully Connected Neural Network
 
  
+ 
+
+
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/input_chart.png)<br />
+**Figure 6.** *Two-layer fully connect neural network for 121 30Hz channels and 121 40 Hz channels*<br />
+Figure source: https://towardsdatascience.com/coding-neural-network-forward-propagation-and-backpropagtion-ccf8cf369f76
 
 ## Results
-![header image](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/demo_task.png)<br />
-**Figure 3.** *Timeline of the Task.*<br />
 
-![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/demo_signalnoise.png)<br />
-**Figure 4.** *How the actualy noise and target stimulus looke like.*<br />
 
 
 
@@ -49,3 +71,7 @@ It's worth mentioning that 0.79% of the train set trials are correct trials, and
 2. Nunez, Michael D., Joachim Vandekerckhove, and Ramesh Srinivasan. 2017. “How Attention Influences Perceptual Decision Making: Single-Trial EEG Correlates of Drift-Diffusion Model Parameters.” Journal of Mathematical Psychology 76 (Pt B): 117–30. https://doi.org/10.1016/j.jmp.2016.03.003.
 
 3. Kwak, No-Sang, Klaus-Robert Müller, and Seong-Whan Lee. 2017. “A Convolutional Neural Network for Steady State Visual Evoked Potential Classification under Ambulatory Environment.” PLoS ONE 12 (2). https://doi.org/10.1371/journal.pone.0172578.
+
+4. “Singular Value Decomposition.” 2020. In Wikipedia. https://en.wikipedia.org/w/index.php?title=Singular_value_decomposition&oldid=993831805.
+
+5. Sun, Baochen, Jiashi Feng, and Kate Saenko. 2015. “Return of Frustratingly Easy Domain Adaptation.” ArXiv:1511.05547 [Cs], December. http://arxiv.org/abs/1511.05547.
