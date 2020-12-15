@@ -16,7 +16,7 @@ The current Task is a S-R Mapping Task. The subject was asked to discriminate 2.
 ### Data Preprocessing
 
 ## Results
-
+![header image](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/demo_task.png)
 
 
 
