@@ -1,2 +1,7 @@
-# PSYCH239NNML_Project
-This repo contains the code for psych239 fall 2020
+# Trail-Level EEG Signals on Classifying Behaviroal Reaction Time and Accuracy during Perceptual Decision Making
+
+Jenny Qinhua Sun <br />
+Human Neuroscience Lab <br />
+University of California, Irvine <br />
+
+## Introduction
