@@ -83,7 +83,7 @@ We then seperately fed them into CNN using CONV1D. Input shapes were either fed 
 
 
 #### N200 Time Series
-Lastly we fed N200 times series data by channel to the CNN. The input shape was [119 x 500], using individual EEG channels as input channels, or [1 x 500], using one single time series obtained by the SVD process described above. 119 channel was selected as they were identified as good channels across all individuals. The 500 second window was picked as the 500ms following the onset of the stimulus. 
+Lastly we fed N200 times series data by channel to the CNN. The input shape was [119 x 500], meaning that there were 119 good channels and 500 time steps. The 500 second window was picked as the first 500ms after the onset of the stimulus. 
 
 
 
@@ -93,9 +93,6 @@ Lastly we fed N200 times series data by channel to the CNN. The input shape was 
 
 #### Classfying Fast/Medium/Slow RT
 None of the above approaches seemed to have any predicting power on RT. Figure is an example of the null results, and therefore will not be presented seperately for each model. 
-
-
-
 ![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/rtclass.png)<br />
 **Figure 9.** *242 features used on classifying three classes of RT.*<br />
 
@@ -103,9 +100,9 @@ None of the above approaches seemed to have any predicting power on RT. Figure i
 
 
 ## Summary and Future Direction
-This project aims to use different EEG signal modalities to classify correct and incorrect trials, and to classify whether RT belongs to one of the three conditions. However, none of the features either alone or jointly succussfully helped the model learn. 
+This project aims to use different EEG modalities to classify correct and incorrect trials, and to classify whether RT belongs to one of the three conditions. However, none of the features either alone or jointly succussfully helped the model learn. One conclusion that seem to be useful is that at least SSVEP features and N200 features jointly could be more trainable when evaluating with the training set, relatively to N200 time series. Perhaps these features worth further exploring as they may share some features that could extracted. It's possiblity that raw time series, even with preprocessing, are still too noisy compared to power spectram that were extracted.
 
-There are sevel future directions we could consider: 1) Using trial level spectrogram. The fact that we only used two key frequencies might not be an optimal to portray the full profile of each trial. 2) Changing the CNN as a regression and use only the accurate trials. Accurate trials could be due to certain features, but inaccurate trials could be due to a mixture of factors. Therefore, using the model to learn the strucutre and classifying the two categories might not be ideal. Using all the combine features to to regress on the RT may be a better approach. 3) Picking some of the channels may reduce the noise. In the SSVEP and ML literature, people usually pick     4) Pick a separate testing and training set. 5) Using other behavioral parameters by trial-blocks, and link them with the blocked EEG signals too to improve SNR.
+There are sevel future directions we could consider: 1) Using trial level spectrogram. The fact that we only used two key frequencies might not be an optimal to portray the full profile of each trial. 2) Changing the CNN as a regression and use only the accurate trials. Accurate trials could be due to certain features, but inaccurate trials could be due to a mixture of factors. Therefore, using the model to learn the strucutre and classifying the two categories might not be ideal. Using all the combine features to to regress on the RT may be a better approach. 3) Picking some of the channels may reduce the noise. In the SSVEP and ML literature, people usually pick channels over visual cortex to reduce noise[3]. 4) Picking a separate testing and training set. 5) Using other behavioral parameters by trial-blocks, and link them with the blocked EEG signals too to improve SNR.
 
 # References 
 1. Bridwell, David A., James F. Cavanagh, Anne G. E. Collins, Michael D. Nunez, Ramesh Srinivasan, Sebastian Stober, and Vince D. Calhoun. 2018. “Moving Beyond ERP Components: A Selective Review of Approaches to Integrate EEG and Behavior.” Frontiers in Human Neuroscience 12. https://doi.org/10.3389/fnhum.2018.00106.
