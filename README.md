@@ -56,7 +56,13 @@ The first neural netowrk was a simple two-layer fully connected network (see Fig
 Figure source: https://towardsdatascience.com/coding-neural-network-forward-propagation-and-backpropagtion-ccf8cf369f76
 
 #### Convolutional Neural Networks
-The second neural network was a convolutional neural network using conv1D (see Fiugure 7). 
+The second neural network was a convolutional neural network using conv1D (see Fiugure 7). The general architecture was adpated and modified from a pervious CNN model used for SSVEP classification task[3]. The network is composed of three layers, two convolutional layers and an output layer.
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/cnn1d.png)<br />
+**Figure 7.** *Two-layer CNN neural 121 30Hz channels and 121 40 Hz channels*<br />
+Figure adapted from [3]
+
+
 
 ## Results
 
