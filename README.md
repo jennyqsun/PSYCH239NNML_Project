@@ -49,11 +49,14 @@ When combining all the trial across subjects, we assumed that there would be no 
 
 ### The two neural networks 
 #### Fully Connected Neural Network
-The first neural netowrk was a simple two-layer fully connected network (see Figure 6). Dropout rate was set to be .5 to prevent from overfitting. The loss function was calculated by cross entropy, and the optimizor was Adam using a learning 1e-3.
+The first neural netowrk was a simple two-layer fully connected network (see Figure 6). Dropout rate was set to be .5 to prevent from overfitting. The loss function was calculated by cross entropy, and the optimizor was Adam using a learning 1e-3. We used fully connected neural network here because there would be no assumption that there is any structure within each EEG channel. When we added the N200 parameter features, the input layer would be [1, 244].
 
 ![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/fcn.png)<br />
 **Figure 6.** *Two-layer fully connect neural network for 121 30Hz channels and 121 40 Hz channels*<br />
 Figure source: https://towardsdatascience.com/coding-neural-network-forward-propagation-and-backpropagtion-ccf8cf369f76
+
+#### Convolutional Neural Networks
+The second neural network was a convolutional neural network using conv1D (see Fiugure 7). 
 
 ## Results
 
