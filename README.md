@@ -43,27 +43,37 @@ Since single trial EEG signals could be very noise, and we plan on using each ch
 #### Domain Adaptation
 When combining all the trial across subjects, we assumed that there would be no individual differences among subjects. And that might severly hurt the performance of the models. Therefore, we used a correlation alighnment algorithm to normalize the features of each such subject based on one specific subject we picked, such that all we transform all subjects' features to one domain[5]. This was implemented by using by Python Package "transfertools." Figure 5 (right) demonstrates how the unsupervised transfer learning technique was applied to use the first and second order statistics of the source and target data for domain adpatation.
 
-![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/input_chart.png)<br />
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/Algorithms.png)<br />
 **Figure 5.** *Left: SVD procedure in 2D space. In our data it would be 121 channel dimensions. Right: Domain Adpatation.*<br />
 
 
 ### The two neural networks 
 #### Fully Connected Neural Network
+The first neural netowrk was a simple two-layer fully connected network (see Figure 6). Dropout rate was set to be .5 to prevent from overfitting. The loss function was calculated by cross entropy, and the optimizor was Adam using a learning 1e-3. We used fully connected neural network here because there would be no assumption that there is any structure within each EEG channel. When we added the N200 parameter features, the input layer would be [1, 244]. When the output is to classify RT, there are 3 classes instead of 2.
 
- 
- 
-
-
-
-![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/input_chart.png)<br />
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/fcn.png)<br />
 **Figure 6.** *Two-layer fully connect neural network for 121 30Hz channels and 121 40 Hz channels*<br />
 Figure source: https://towardsdatascience.com/coding-neural-network-forward-propagation-and-backpropagtion-ccf8cf369f76
 
+#### Convolutional Neural Networks
+The second neural network was a convolutional neural network using conv1D (see Fiugure 7). The general architecture was adpated and modified from a pervious CNN model used for SSVEP classification task[3]. The network is composed of three layers, two convolutional layers and an output layer. One maxpool was implemented after C2, following by a dropout layer and a flatten step.
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/cnn1d.png)<br />
+**Figure 7.** *Two-layer CNN neural 121 30Hz channels and 121 40 Hz channels*<br />
+Figure adapted from [3]
+
 ## Results
+### SSVEPs 
+When feeding 242 features containing 30Hz and 40Hz power across 121 channels to the two-layer fully connected neural network **without** oversampling, the training was able to converge closer to 1, but the model doesn't seem to learn much useful information. Either oversampling or not doesn't seem to make a difference (Figure 8a, 8b)).
 
+It's worth mentioning that given that 73% of the trials in the testing set are from one category, if the model learned absolutely no information, it will make all predictions as one category and thus reaching 73% accuracy. However, deviating from 73% doesn not necessarily mean that it picked up any useful feature. Therefore, a precision score is added to measure performance, calculated by *true positive / (true positive + false positive)*. The idea is that if the precision score remained the same, even if the model picked up some strucutres it's likely not valid. In order to error check the model, direct labels was added to the data, and it seemed like that the model was performing fine (Figure 8c).
+**Figure 8.** *fcn with 242 features*<br />
 
+The two N200 features were also added to the mode. The N200 peak and latency were two relative measures obtained by subtracting ERP peak and latency enhanced by the SVD procedure. Figure 9 demontrated that the training accuracy was able to slowly converge, testing accuracy stayed low (.68). The precision score stayed unchanged.
+**Figure 9.** *fcn with 244 features*<br />
 
-
+## Summary and Future Direction
+This project aims to 
 
 # References 
 1. Bridwell, David A., James F. Cavanagh, Anne G. E. Collins, Michael D. Nunez, Ramesh Srinivasan, Sebastian Stober, and Vince D. Calhoun. 2018. “Moving Beyond ERP Components: A Selective Review of Approaches to Integrate EEG and Behavior.” Frontiers in Human Neuroscience 12. https://doi.org/10.3389/fnhum.2018.00106.
