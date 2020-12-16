@@ -83,7 +83,7 @@ We then seperately fed them into CNN using CONV1D. Input shapes were either fed 
 
 
 #### N200 Time Series
-Lastly we fed N200 times series data by channel to the CNN. The input shape was [119 x 500], meaning that there were 119 good channels and 500 time steps. The 500 second window was picked as the first 500ms after the onset of the stimulus. 
+Lastly we fed N200 times series data by channel to the CNN. The input shape was [119 x 500], using individual EEG channels as input channels, or [1 x 500], using one single time series obtained by the SVD process described above. 119 channel was selected as they were identified as good channels across all individuals. The 500 second window was picked as the 500ms following the onset of the stimulus. 
 
 
 
