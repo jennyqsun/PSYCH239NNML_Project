@@ -83,6 +83,8 @@ We then seperately fed them into CNN using CONV1D. Input shapes were either fed 
 
 
 #### N200 Time Series
+Lastly we fed N200 times series data by channel to the CNN. The input shape was [119 x 500], meaning that there were 119 good channels and 500 time steps. The 500 second window was picked as the first 500ms after the onset of the stimulus. 
+
 
 
 
@@ -101,7 +103,7 @@ None of the above approaches seemed to have any predicting power on RT. Figure i
 
 
 ## Summary and Future Direction
-This project aims to use different EEG signal modalities to classify correct and incorrect trials, and to classify whether RT belongs to one of the three conditions. 
+This project aims to use different EEG signal modalities to classify correct and incorrect trials, and to classify whether RT belongs to one of the three conditions. However, none of the features either alone or jointly succussfully helped the model learn. 
 
 There are sevel future directions we could consider: 1) Using trial level spectrogram. The fact that we only used two key frequencies might not be an optimal to portray the full profile of each trial. 2) Changing the CNN as a regression and use only the accurate trials. Accurate trials could be due to certain features, but inaccurate trials could be due to a mixture of factors. Therefore, using the model to learn the strucutre and classifying the two categories might not be ideal. Using all the combine features to to regress on the RT may be a better approach. 3) Picking some of the channels may reduce the noise. In the SSVEP and ML literature, people usually pick     4) Pick a separate testing and training set. 5) Using other behavioral parameters by trial-blocks, and link them with the blocked EEG signals too to improve SNR.
 
