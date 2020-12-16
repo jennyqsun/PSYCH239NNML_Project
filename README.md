@@ -63,17 +63,42 @@ The second neural network was a convolutional neural network using conv1D (see F
 Figure adapted from [3]
 
 ## Results
-### SSVEPs 
+#### SSVEP
 When feeding 242 features containing 30Hz and 40Hz power across 121 channels to the two-layer fully connected neural network **without** oversampling, the training was able to converge closer to 1, but the model doesn't seem to learn much useful information. Either oversampling or not doesn't seem to make a difference (Figure 8a, 8b)).
 
 It's worth mentioning that given that 73% of the trials in the testing set are from one category, if the model learned absolutely no information, it will make all predictions as one category and thus reaching 73% accuracy. However, deviating from 73% doesn not necessarily mean that it picked up any useful feature. Therefore, a precision score is added to measure performance, calculated by *true positive / (true positive + false positive)*. The idea is that if the precision score remained the same, even if the model picked up some strucutres it's likely not valid. In order to error check the model, direct labels was added to the data, and it seemed like that the model was performing fine (Figure 8c).
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/fcn_ssvep242.png)<br />
 **Figure 8.** *fcn with 242 features*<br />
 
-The two N200 features were also added to the mode. The N200 peak and latency were two relative measures obtained by subtracting ERP peak and latency enhanced by the SVD procedure. Figure 9 demontrated that the training accuracy was able to slowly converge, testing accuracy stayed low (.68). The precision score stayed unchanged.
+The two N200 features were also added to the input features. The N200 peak and latency were two relative measures obtained by subtracting ERP peak and latency enhanced by the SVD procedure. Figure 9 demontrated that the training accuracy was able to slowly converge, testing accuracy stayed low (.68). The precision score stayed unchanged.
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/fcn_ssvep244.png)<br />
 **Figure 9.** *fcn with 244 features*<br />
+
+
+We then seperately fed them into CNN using CONV1D. Input shapes were either fed as a 1D vector [1 channel x 242 or 244 features, or 2 channels x 121 or 122 features], depending on whether including N200 parameters or not. 
+
+#### N200 Time Series
+
+
+
+
+
+
+#### Classfying Fast/Medium/Slow RT
+None of the above approaches seemed to have any predicting power on RT. Figure is an example of the null results, and therefore will not be presented seperately. 
+
+
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/rtclass.png)<br />
+**Figure 9.** *242 features used on classifying three classes of RT.*<br />
+
+
+
 
 ## Summary and Future Direction
 This project aims to 
+
+There are sevel future directions we could consider: 1) Using trial level spectrogram. The fact that we only used two key frequencies might not be an optimal to portray the full profile of each trial. 2) Change the CNN as a regression and use only the accurate trials. 
 
 # References 
 1. Bridwell, David A., James F. Cavanagh, Anne G. E. Collins, Michael D. Nunez, Ramesh Srinivasan, Sebastian Stober, and Vince D. Calhoun. 2018. “Moving Beyond ERP Components: A Selective Review of Approaches to Integrate EEG and Behavior.” Frontiers in Human Neuroscience 12. https://doi.org/10.3389/fnhum.2018.00106.
