@@ -68,14 +68,19 @@ When feeding 242 features containing 30Hz and 40Hz power across 121 channels to 
 
 It's worth mentioning that given that 73% of the trials in the testing set are from one category, if the model learned absolutely no information, it will make all predictions as one category and thus reaching 73% accuracy. However, deviating from 73% doesn not necessarily mean that it picked up any useful feature. Therefore, a precision score is added to measure performance, calculated by *true positive / (true positive + false positive)*. The idea is that if the precision score remained the same, even if the model picked up some strucutres it's likely not valid. In order to error check the model, direct labels was added to the data, and it seemed like that the model was performing fine (Figure 8c).
 ![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/fcn_ssvep242.png)<br />
-**Figure 8.** *fcn with 242 features*<br />
+**Figure 8.** *FCN with 242 features*<br />
 
 The two N200 features were also added to the input features. The N200 peak and latency were two relative measures obtained by subtracting ERP peak and latency enhanced by the SVD procedure. Figure 9 demontrated that the training accuracy was able to slowly converge, testing accuracy stayed low (.68). The precision score stayed unchanged.
 ![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/fcn_ssvep244.png)<br />
-**Figure 9.** *fcn with 244 features*<br />
+**Figure 9.** *FCN with 244 features*<br />
 
 
-We then seperately fed them into CNN using CONV1D. Input shapes were either fed as a 1D vector [1 channel x 242 or 244 features, or 2 channels x 121 or 122 features], depending on whether including N200 parameters or not. 
+We then seperately fed them into CNN using CONV1D. Input shapes were either fed as a 1D vector [1 channel x 242 or 244 features, or 2 channels x 121 or 122 features], depending on whether including N200 parameters or not. None of the model seemed to extract useful information. None of the model seemed to extract useful information from the input (see Figure 10). However, it is worth mentioning that the testing accuracy from SSVEP + N200 feature as 1 channel produced the highest accuracy that became closer to precision (upper right in Figure 10) 
+
+![image info](https://github.com/jennyqsun/PSYCH239NNML_Project/blob/main/Figures/conv1d_ssvepn200.png)<br />
+**Figure 10.** *CNN with 242 or 244 features, treating as 1 or 2 input channels.*<br />
+
+
 
 #### N200 Time Series
 
@@ -85,7 +90,7 @@ We then seperately fed them into CNN using CONV1D. Input shapes were either fed 
 
 
 #### Classfying Fast/Medium/Slow RT
-None of the above approaches seemed to have any predicting power on RT. Figure is an example of the null results, and therefore will not be presented seperately. 
+None of the above approaches seemed to have any predicting power on RT. Figure is an example of the null results, and therefore will not be presented seperately for each model. 
 
 
 
@@ -96,9 +101,9 @@ None of the above approaches seemed to have any predicting power on RT. Figure i
 
 
 ## Summary and Future Direction
-This project aims to 
+This project aims to use different EEG signal modalities to classify correct and incorrect trials, and to classify whether RT belongs to one of the three conditions. 
 
-There are sevel future directions we could consider: 1) Using trial level spectrogram. The fact that we only used two key frequencies might not be an optimal to portray the full profile of each trial. 2) Change the CNN as a regression and use only the accurate trials. 
+There are sevel future directions we could consider: 1) Using trial level spectrogram. The fact that we only used two key frequencies might not be an optimal to portray the full profile of each trial. 2) Changing the CNN as a regression and use only the accurate trials. Accurate trials could be due to certain features, but inaccurate trials could be due to a mixture of factors. Therefore, using the model to learn the strucutre and classifying the two categories might not be ideal. Using all the combine features to to regress on the RT may be a better approach. 3) Picking some of the channels may reduce the noise. In the SSVEP and ML literature, people usually pick     4) Pick a separate testing and training set. 5) Using other behavioral parameters by trial-blocks, and link them with the blocked EEG signals too to improve SNR.
 
 # References 
 1. Bridwell, David A., James F. Cavanagh, Anne G. E. Collins, Michael D. Nunez, Ramesh Srinivasan, Sebastian Stober, and Vince D. Calhoun. 2018. “Moving Beyond ERP Components: A Selective Review of Approaches to Integrate EEG and Behavior.” Frontiers in Human Neuroscience 12. https://doi.org/10.3389/fnhum.2018.00106.
