@@ -2,7 +2,6 @@ Author: Jenny Qinhua Sun
 
 This directory contains ready-to-be-used data pipeline to feed brain signals from the pdmattention dataset (N200, SSVEP power, raw signals) to FCN (Fully Connecte Neural Networks) and CNNs (1d Convolutional Neural Network)
 
-<<<<<<< HEAD
 =======
 ## Introduction
 As humans, we constantly interact with the world by quickly allocating attention, detecting stimuli and making decisions. Electroencephalogram(EEG), compared with other neuroimaging techniques, has high temporal resolution and thus has been widely used to investigate the neural correlates between brain signals and behavioral response. Traditionally, event-related potential (ERP) components has been a well-established measure to study human cognition, as the Signal-to-noise-ratio(SNR) are stronger when time series are obtained by averaging across trials and subjects. Critically, a growing body of research has focused on developing new computational apporaches to extract features from single-trial EEG and link them with behavior during decision making[1]. 
@@ -115,4 +114,4 @@ There are sevel future directions: 1) Using trial-level spectrogram (or Hilbert 
 4. “Singular Value Decomposition.” 2020. In Wikipedia. https://en.wikipedia.org/w/index.php?title=Singular_value_decomposition&oldid=993831805.
 
 5. Sun, Baochen, Jiashi Feng, and Kate Saenko. 2015. “Return of Frustratingly Easy Domain Adaptation.” ArXiv:1511.05547 [Cs], December. http://arxiv.org/abs/1511.05547.
->>>>>>> 151801970e82a379e575b007be450eca76b4f3a8
+
